@@ -11,8 +11,22 @@ function TodoList(){
     // isse ye hoga ki parent ko barbar child m prop pass nhi krne pdenge 
     // because aapne object set kiya the parent m valu ke use se 
     // toh yha bhi object se hi loge na
+    // jab kabhi bhi list and dispatch ko access krenge toh isi trh karenge 
     const {list}=useContext(TodoContext);
     const {dispatch}=useContext(TodoDispachContext);
+
+    function onFinished(todo, isFinished){
+        dispatch({type:"finish_todo",payload : {todo,isFinished}})
+    }
+
+    function onDelete(todo){
+        dispatch({type : "delete_todo", payload: {todo}});
+    }
+
+    function onEdit(todo,todoText){
+        dispatch({type: "edit_todo",payload : {todo, todoText}});
+    }
+
     return (
         <div>
             {(list.length>0) &&
@@ -21,12 +35,11 @@ function TodoList(){
                                 key={todo.id} 
                                 todoData={todo.todoData} 
                                  isFinished={todo.finished} 
-                                 changeFinished={(isFinished)=>dispatch({type:"isFinished",payload : {todo,isFinished}})}
-                                 onDelete={()=>dispatch({type:"onDelete", payload : {todo}})}
-                                 onEdit={(todoText)=>dispatch({type:"edit_todo", payload : {todo,todoText}})}
+                                 changeFinished={(isFinished)=>onFinished(todo,isFinished)}
+                                 onDelete={()=>onDelete(todo)}
+                                 onEdit={(todoText)=>onEdit(todo,todoText)}
                                 />)}
         </div>
     )
 }
-
 export default TodoList

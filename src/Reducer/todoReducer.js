@@ -23,13 +23,13 @@ function todoReducer(state,action){
             return t;
         })
         return changeList;
-    }else if(action.type=="onDelete"){
+    }else if(action.type=="delete_todo"){
          // changeList m list of the other aayenge 
          let todo=action.payload.todo;
          const changeList=state.filter((t)=>t.id != todo.id)
          // console.log(changeList)
         return changeList;
-    }else if(action.type=="onFinished"){
+    }else if(action.type=="finish_todo"){
         let todo=action.payload.todo;
         let isFinished=action.payload.isFinished;
         const changeList=state.map(t=>{
